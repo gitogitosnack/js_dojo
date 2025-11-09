@@ -102,30 +102,29 @@ function sayHello_0(){
     console.log("税込み価格: " + pricesWithTax);
 
     // 2-6-2. filterのような配列メソッドでは、「配列の各要素に対して、どのような判定（ロジック）を行うか」をコールバック関数として渡します。これにより、メソッド自体は汎用的な「フィルタリング」処理に集中でき、ロジックは外部から代入（注入）できます。
+    // filterメソッドは、JavaScriptの**配列（Array）**が持つメソッドの一つで、特定の条件を満たす要素だけを抽出して、新しい配列を作成するために使われます。
     // 株価診断アプリで「適正株価より安い銘柄」だけを抽出する処理を考えます。
-    // 1. 銘柄データ（オブジェクトの配列）
+    // 銘柄データ（配列の中にオブジェクト型の銘柄情報が格納されている。）
     const stockList = [
         { name: "銘柄A", currentPrice: 1200, fairValue: 1000 },
-
         { name: "銘柄B", currentPrice: 800, fairValue: 1000 },
         { name: "銘柄C", currentPrice: 1500, fairValue: 1400 },
         { name: "銘柄D", currentPrice: 500, fairValue: 600 }
     ];
-
-    // 2. 抽出ロジック（コールバック関数）を定義
+    // 抽出ロジック（コールバック関数）を定義
     // この関数は配列の各要素に適用され、trueを返すと残る
     const isUndervalued = (stock) => {
         return stock.currentPrice < stock.fairValue;
     };
-
-    // 3. filterメソッドに isUndervalued 関数を代入（渡す）
+    // filterメソッドに isUndervalued 関数を代入（渡す）
     const undervaluedStocks = stockList.filter(isUndervalued);
-
     console.log("割安と診断された銘柄:");
+    // .forEach() は、JavaScriptの配列が持つメソッドで、配列内の要素を最初から最後まで一つずつ取り出して、指定された処理を実行します。
+    // .forEach()の引数として渡されているのが、アロー関数(stock => { ... })
     undervaluedStocks.forEach(stock => {
         console.log(`- ${stock.name} (現在: ${stock.currentPrice}, 適正: ${stock.fairValue})`);
-    });
-
+    }
+    );
     // (コンソール出力)
     // 割安と診断された銘柄:
     // - 銘柄B (現在: 800, 適正: 1000)
