@@ -1,0 +1,30 @@
+/* ナビゲーションメニューの初期状態（非表示） */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    left: -100%; /* 画面外に隠す */
+    transition: left 0.3s ease;
+    /* その他のスタイリング */
+}
+
+/* メニューが開いた状態 */
+.nav-menu.is-active {
+    left: 0; /* 画面内に表示 */
+}
+
+/* ハンバーガーアイコンの三本線スタイリング */
+.hamburger-menu span {
+    /* 線に見せるための設定（幅、高さ、背景色） */
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* アイコンがアクティブ（×印）になった状態 */
+.hamburger-menu.is-active span:nth-child(1) {
+    transform: translateY(Xpx) rotate(45deg); /* 上の線を回転・移動 */
+}
+.hamburger-menu.is-active span:nth-child(2) {
+    opacity: 0; /* 中央の線を非表示 */
+}
+.hamburger-menu.is-active span:nth-child(3) {
+    transform: translateY(-Xpx) rotate(-45deg); /* 下の線を回転・移動 */
+}

@@ -33,6 +33,7 @@ function sayHello_0(){
     })("Nino&Haru");
 
 // 2-5. コールバック関数callback function
+// 2-5-1. setTimeoutタイマー関数を使用するときにも関数を変数に代入している。
     const sayHello_5 = function(){
         console.log("Hello!5 " + "もう、3秒経ったよ。えっ！Σ（・□・；）");
     }
@@ -40,7 +41,51 @@ function sayHello_0(){
     setTimeout(sayHello_5, 3000);
     console.log("setTimeoutを待たずに後続処理を実行！");
 
+// 2-5-2. イベント関数を使用するときにも関数を変数に代入している。
+    // コールバック関数を定義
+    const handleClick = () => {
+        // ボタンがクリックされたときに実行される処理
+        console.log("ボタンがクリックされました！コールバックが実行されました。");
+    };
+    // HTML要素の取得をシミュレーション
+    const button = { 
+        id: "myButton", 
+        addEventListener: (event, callback) => {
+            console.log(`イベントリスナーを登録: ${event}が発生したら、指定された関数を実行します。`);
+            // 実際にはユーザーの操作を待つ
+            // ... (クリックが発生) ...
+            // callback(); // <-- イベント発生時に、代入された関数を実行
+        }
+    };
+    // addEventListenerに関数（handleClick）を代入（渡す）
+    button.addEventListener('click', handleClick);
+    // (コンソール出力例)
+    // イベントリスナーを登録: clickが発生したら、指定された関数を実行します。
+
+// 2-5-3. データ取得処理を行うときにも関数を変数に代入している。
+    // インターネットからデータを取得する処理は時間がかかるため非同期で行われます。
+    const apiUrl = 'https://api.example.com/data'; 
+    // データ取得に成功した後の処理を定義（コールバック）
+    // arrow function=>
+    const processData = (data) => {
+        console.log("データの取得に成功しました。");
+        console.log("受け取ったデータ:", data);
+    };
+    // データの取得開始
+    // fetchはPromiseを返し、.then()に成功時のコールバック関数を渡す
+    fetch(apiUrl)
+        .then(response => response.json()) // arrow function=>
+        .then(processData) // <-- データのJSON変換が完了した後、processData関数を代入（渡す）
+        .catch(error => console.error("エラーが発生しました:", error));
+    console.log("データ取得の指示を出しました。結果を待たずに次の処理を実行します。"); 
+    // (コンソール出力例 - 実際の取得は時間がかかる)
+    // データ取得の指示を出しました。結果を待たずに次の処理を実行します。
+    // (数秒後 - 取得成功時)
+    // データの取得に成功しました。
+    // 受け取ったデータ: { /* ...取得したデータ... */ }
+
 // 2-6. Map等のリストの加工処理で関数を代入した変数を第一級引数として実行する。
+    // 2-6-1. Map
     // 変換したいデータの配列
     const prices = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000];
 
@@ -56,13 +101,33 @@ function sayHello_0(){
     console.log("税抜き価格: " + prices);
     console.log("税込み価格: " + pricesWithTax);
 
-// 2-7. 
+    // 2-6-2. filterのような配列メソッドでは、「配列の各要素に対して、どのような判定（ロジック）を行うか」をコールバック関数として渡します。これにより、メソッド自体は汎用的な「フィルタリング」処理に集中でき、ロジックは外部から代入（注入）できます。
+    // 株価診断アプリで「適正株価より安い銘柄」だけを抽出する処理を考えます。
+    // 1. 銘柄データ（オブジェクトの配列）
+    const stockList = [
+        { name: "銘柄A", currentPrice: 1200, fairValue: 1000 },
 
+        { name: "銘柄B", currentPrice: 800, fairValue: 1000 },
+        { name: "銘柄C", currentPrice: 1500, fairValue: 1400 },
+        { name: "銘柄D", currentPrice: 500, fairValue: 600 }
+    ];
 
+    // 2. 抽出ロジック（コールバック関数）を定義
+    // この関数は配列の各要素に適用され、trueを返すと残る
+    const isUndervalued = (stock) => {
+        return stock.currentPrice < stock.fairValue;
+    };
 
+    // 3. filterメソッドに isUndervalued 関数を代入（渡す）
+    const undervaluedStocks = stockList.filter(isUndervalued);
 
+    console.log("割安と診断された銘柄:");
+    undervaluedStocks.forEach(stock => {
+        console.log(`- ${stock.name} (現在: ${stock.currentPrice}, 適正: ${stock.fairValue})`);
+    });
 
-
-
-
+    // (コンソール出力)
+    // 割安と診断された銘柄:
+    // - 銘柄B (現在: 800, 適正: 1000)
+    // - 銘柄D (現在: 500, 適正: 600)
 
