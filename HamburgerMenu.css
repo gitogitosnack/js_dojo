@@ -1,30 +1,119 @@
-/* ナビゲーションメニューの初期状態（非表示） */
-.nav-menu {
+html {
+    font-family: 'M PLUS 1' , sans-serif;
+    overflow-x: hidden;
+
+}
+
+
+main, footer {
+    background-color: blueviolet;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+
+}
+
+#header {
+    background-color: darkgreen;
+    width: 90%;
+    max-width: 1000px;
+    height: 70px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+/* #header.active{
+    background-color: aqua;
+
+} */
+
+/* not active display*/
+#hmb {
+    background-color: gray;
+    width: 32px;
+    height: 28px;
+    cursor: pointer;
+    position: relative;
+    z-index: 30;
+
+}
+
+#hmb span {
+    width: 30px;
+    height: 3px;
+    display: block;
+    background-color: black;
+    border-radius: 2px;
+    position: absolute;
+    transition: .2s;
+
+}
+
+#hmb span:first-child {top: 0;}
+#hmb span:nth-child(2) {top: 12px;}
+#hmb span:last-child {top: 24px;}
+
+nav {
     position: fixed;
     top: 0;
-    left: -100%; /* 画面外に隠す */
-    transition: left 0.3s ease;
-    /* その他のスタイリング */
+    right: 0;
+    width: 80%;
+    max-width: 400px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition-property: all;
+    transition-duration: .2s;
+
 }
 
-/* メニューが開いた状態 */
-.nav-menu.is-active {
-    left: 0; /* 画面内に表示 */
+nav ul li a {
+    background-color: orange;
+    display: block;
+    margin-bottom: 16px;
+
 }
 
-/* ハンバーガーアイコンの三本線スタイリング */
-.hamburger-menu span {
-    /* 線に見せるための設定（幅、高さ、背景色） */
-    transition: transform 0.3s, opacity 0.3s;
+/* active display */
+.active #hmb span:first-child{
+    top: 12px;
+    transform: rotate(45deg);
+
 }
 
-/* アイコンがアクティブ（×印）になった状態 */
-.hamburger-menu.is-active span:nth-child(1) {
-    transform: translateY(Xpx) rotate(45deg); /* 上の線を回転・移動 */
+.active #hmb span:nth-child(2) {
+    opacity: 0;
+
 }
-.hamburger-menu.is-active span:nth-child(2) {
-    opacity: 0; /* 中央の線を非表示 */
+
+.active #hmb span:last-child {
+    top: 12px;
+    transform: rotate(-45deg);
 }
-.hamburger-menu.is-active span:nth-child(3) {
-    transform: translateY(-Xpx) rotate(-45deg); /* 下の線を回転・移動 */
+
+.active nav {
+    background-color: rosybrown;
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+
+}
+.active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.4;
+    z-index: 10;
 }

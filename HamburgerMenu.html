@@ -1,7 +1,7 @@
 <!-- hamburgerMenu -->
 <!-- メニューのアイコン（三本線）と、表示・非表示を切り替えるメニュー本体の構造を作成します。 -->
  <!DOCTYPE html>
- <html lang="jp">
+ <html lang="ja">
  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +9,15 @@
     <title>Document</title>
  </head>
  <body>
-    
     <!-- header -->
-    <header>
-        <button class="hamburger-menu" aria-expanded="false" aria-controls="main-menu">
+    <header id="header">
+        <!-- hamburgerMenuButton -->
+        <div id="hmb">
             <span></span>
             <span></span>
             <span></span>
-        </button>
-        <nav id="main-menu" class="nav-menu">
+        </div>   
+        <nav>
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
